@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Advanced_To_DoList.Business</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.5.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.1" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Advanced-To-DoList.Core\Advanced-ToDoList.Core.csproj" />
+    <ProjectReference Include="..\Advanced-ToDoList.DataAccess\Advanced-ToDoList.DataAccess.csproj" />
+    <ProjectReference Include="..\Advanced-ToDoList.Entities\Advanced-ToDoList.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
