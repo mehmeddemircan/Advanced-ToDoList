@@ -29,5 +29,7 @@ namespace Advanced_ToDoList.DataAccess.Concrete.Contexts
 
         public DbSet<Mission> Missions { get; set; }
 
+        public DbSet<Step> Steps { get; set; }
+
     }
 }

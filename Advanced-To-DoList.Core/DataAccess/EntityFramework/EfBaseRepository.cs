@@ -65,10 +65,12 @@ namespace Advanced_To_DoList.Core.DataAccess.EntityFramework
             }
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task<TEntity> UpdateAsync( TEntity entity)
         {
             using (var context = new TContext())
             {
+
+               
                 context.Set<TEntity>().Update(entity);
                 await context.SaveChangesAsync();
 

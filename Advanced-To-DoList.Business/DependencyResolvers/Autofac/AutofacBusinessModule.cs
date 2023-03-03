@@ -10,6 +10,7 @@ using Advanced_ToDoList.DataAccess.Concrete.EntityFramework;
 using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,12 @@ namespace Advanced_ToDoList.Business.DependencyResolvers.Autofac
 
             builder.RegisterType<PersonManager>().As<IPersonService>();
             builder.RegisterType<PersonRepository>().As<IPersonRepository>();
+
+            builder.RegisterType<StepManager>().As<IStepService>();
+            builder.RegisterType<StepRepository>().As<IStepRepository>();
+
+            builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>();
+            builder.RegisterType<UserOperationClaimRepository>().As<IUserOperationClaimRepository>();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

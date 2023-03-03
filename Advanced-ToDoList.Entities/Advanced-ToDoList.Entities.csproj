@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Abstract\" />
-    <Folder Include="Dtos\User\" />
   </ItemGroup>
 
   <ItemGroup>

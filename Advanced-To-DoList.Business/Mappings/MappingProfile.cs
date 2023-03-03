@@ -1,7 +1,10 @@
-﻿using Advanced_ToDoList.Entities.Concrete;
+﻿using Advanced_To_DoList.Core.Entities.Concrete.Auth;
+using Advanced_ToDoList.Entities.Concrete;
 using Advanced_ToDoList.Entities.Dtos.Group;
 using Advanced_ToDoList.Entities.Dtos.Mission;
 using Advanced_ToDoList.Entities.Dtos.Person;
+using Advanced_ToDoList.Entities.Dtos.Step;
+using Advanced_ToDoList.Entities.Dtos.User;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -53,6 +56,26 @@ namespace Advanced_To_DoList.Business.Mappings
 
             CreateMap<Group, GroupDetailDto>();
             CreateMap<GroupDetailDto, Group>();
+
+
+            CreateMap<User, UserDetailDto>();
+            CreateMap<UserDetailDto, User>();
+
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
+
+
+            CreateMap<Step, StepAddDto>();
+            CreateMap<StepAddDto, Step>();
+
+            CreateMap<Step, StepDto>();
+            CreateMap<StepDto, Step>();
+
+            CreateMap<Step, StepUpdateDto>();
+            CreateMap<StepUpdateDto, Step>();
+
+            CreateMap<Step, StepDetailDto>();
+            CreateMap<StepDetailDto, Step>();
         }
     }
 }

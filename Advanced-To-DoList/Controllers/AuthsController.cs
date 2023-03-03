@@ -49,7 +49,7 @@ namespace Advanced_To_DoList.Controllers
 
             if (result.Success)
             {
-                return Ok(result);
+                return Ok(result.Data);
             }
 
             return BadRequest(result.Message);

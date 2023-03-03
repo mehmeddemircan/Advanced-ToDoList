@@ -120,6 +120,40 @@ namespace Advanced_ToDoList.DataAccess.Migrations
                     b.ToTable("People");
                 });
 
+            modelBuilder.Entity("Advanced_ToDoList.Entities.Concrete.Step", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MissionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StepText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MissionId");
+
+                    b.ToTable("Steps");
+                });
+
             modelBuilder.Entity("Advanced_To_DoList.Core.Entities.Concrete.Auth.OperationClaim", b =>
                 {
                     b.Property<int>("Id")
@@ -232,9 +266,25 @@ namespace Advanced_ToDoList.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Advanced_ToDoList.Entities.Concrete.Step", b =>
+                {
+                    b.HasOne("Advanced_ToDoList.Entities.Concrete.Mission", "Mission")
+                        .WithMany("Steps")
+                        .HasForeignKey("MissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Mission");
+                });
+
             modelBuilder.Entity("Advanced_ToDoList.Entities.Concrete.Group", b =>
                 {
                     b.Navigation("Missions");
+                });
+
+            modelBuilder.Entity("Advanced_ToDoList.Entities.Concrete.Mission", b =>
+                {
+                    b.Navigation("Steps");
                 });
 #pragma warning restore 612, 618
         }

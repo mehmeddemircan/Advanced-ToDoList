@@ -18,5 +18,7 @@ namespace Advanced_ToDoList.Entities.Concrete
         public int GroupId { get; set; }
 
         public virtual Group Group { get; set; }
+
+        public IEnumerable<Step> Steps { get; set; }
     }
 }

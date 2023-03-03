@@ -15,7 +15,7 @@ namespace Advanced_To_DoList.Business.Abstract
 
         Task<IDataResult<IEnumerable<MissionDetailDto>>> GetListAsync(Expression<Func<Mission, bool>> filter = null);
 
-        Task<IDataResult<MissionDto>> AddAsync(MissionAddDto entity);
+        Task<IResult> AddAsync(MissionAddDto entity);
 
 
         Task<IDataResult<MissionUpdateDto>> UpdateAsync(MissionUpdateDto entity);

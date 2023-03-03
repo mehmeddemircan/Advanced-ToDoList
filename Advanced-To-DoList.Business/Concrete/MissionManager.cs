@@ -1,6 +1,10 @@
 ﻿using Advanced_To_DoList.Business.Abstract;
+using Advanced_To_DoList.Business.BusinessAspects.Autofac;
 using Advanced_To_DoList.Business.Constants;
+using Advanced_To_DoList.Business.Validation.FluentValidation;
+using Advanced_To_DoList.Core.Utilities.Business;
 using Advanced_To_DoList.Core.Utilities.Results;
+using Advanced_ToDoList.Core.Aspects.Validation;
 using Advanced_ToDoList.DataAccess.Abstract;
 using Advanced_ToDoList.Entities.Concrete;
 using Advanced_ToDoList.Entities.Dtos.Mission;
@@ -26,16 +30,25 @@ namespace Advanced_To_DoList.Business.Concrete
             _mapper = mapper;
         }
 
-        public async Task<IDataResult<MissionDto>> AddAsync(MissionAddDto entity)
+        [ValidationAspect(typeof(MissionValidator))]
+        public async Task<IResult> AddAsync(MissionAddDto entity)
         {
-            var mission = _mapper.Map<Mission>(entity);
 
-            mission.CreatedDate = DateTime.Now;
+            IResult result = BusinessRules.Run(CheckIfMissionCountOfGroupCorrect(entity.MissionName,entity.GroupId));
 
-            var missionAdd = await _missionRepository.AddAsync(mission);
-            var missionDto = _mapper.Map<MissionDto>(missionAdd);
+            if (result != null)
+            {
+                return result; 
+            }
 
-            return new SuccessDataResult<MissionDto>(missionDto, Messages.Added);
+             var mission = _mapper.Map<Mission>(entity);
+
+             mission.CreatedDate = DateTime.Now;
+
+             await _missionRepository.AddAsync(mission);
+
+
+            return new SuccessResult(Messages.Added);
         }
 
         public async Task<IDataResult<bool>> DeleteAsync(int id)
@@ -90,6 +103,18 @@ namespace Advanced_To_DoList.Business.Concrete
             var missionUpdateMap = _mapper.Map<MissionUpdateDto>(resultUpdate);
 
             return new SuccessDataResult<MissionUpdateDto>(missionUpdateMap, Messages.Updated);
+        }
+
+
+        private  IResult CheckIfMissionCountOfGroupCorrect(string missionName , int groupId )
+        {
+            var result =  _missionRepository.GetListAsync(m => m.MissionName == missionName && m.GroupId == groupId).Result.Any();
+
+            if (result)
+            {
+                return new ErrorResult("zaten var bu isimde");
+            }
+            return new SuccessResult("basarili");
         }
     }
 }

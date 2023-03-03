@@ -21,7 +21,7 @@ namespace Advanced_ToDoList.Entities.Dtos.Person
 
         public int UserId { get; set; }
 
-        public virtual User User { get; set; }
+     
 
     }
 }

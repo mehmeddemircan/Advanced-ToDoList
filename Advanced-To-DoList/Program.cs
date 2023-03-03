@@ -1,12 +1,16 @@
-using Advanced_To_DoList.Business.Mappings;
+﻿using Advanced_To_DoList.Business.Mappings;
+using Advanced_To_DoList.Core.DependencyResolvers;
+using Advanced_To_DoList.Core.Extensions;
 using Advanced_To_DoList.Core.Utilities.Security.Encryption;
 using Advanced_To_DoList.Core.Utilities.Security.JWT;
 using Advanced_ToDoList.Business.DependencyResolvers.Autofac;
+using Advanced_ToDoList.Core.IoC;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +19,36 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Bearer þemasýný kullanan JWT Yetkilendirme baþlýðý. \r\n\r\n 'Bearer' [boþluk] girin ve ardýndan aþaðýdaki metin giriþine simgenizi girin.\r\n\r\nÖrnek: \"Bearer 12345abcdef\"",
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+});
+
+
+
 
 #region AutoMapper
 var mapperConfig = new MapperConfiguration(mc =>
@@ -50,9 +83,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
         };
+
+    });
+//core module httpcontext dependency 
+builder.Services.AddDependencyResolvers(new ICoreModule[]
+{
+    new CoreModule()
+}) ; 
+
+builder.Services.AddCors(options =>
+{
+    var frontendURL = configuration.GetValue<string>("frontend_url");
+
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader();
     });
 
-
+});
 
 var app = builder.Build();
 
@@ -64,6 +112,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthentication();
 
