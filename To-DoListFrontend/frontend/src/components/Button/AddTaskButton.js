@@ -1,13 +1,13 @@
 import { Button } from "antd";
 import React, { Fragment, useState } from "react";
 
-const AddTaskButton = () => {
+const AddTaskButton = ({missionName,setMissionName,handleAddMission}) => {
   // const [openInput, setOpenInput] = useState(false);
-  const [missionName, setMissionName] = useState("");
+ 
 
   return (
     <Fragment>
-      <div class="d-flex justify-content-between">
+      <div class="my-3 d-flex justify-content-between">
         <input
           type="text"
           class="form-control"
@@ -22,6 +22,7 @@ const AddTaskButton = () => {
         <button
           class="btn btn-outline-primary rounded-pill mx-2 "
           style={{ visibility: missionName === "" ? "hidden" : "visible" }}
+          onClick={handleAddMission}
         >
           {" "}
           Ekle

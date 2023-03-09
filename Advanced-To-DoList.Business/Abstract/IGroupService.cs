@@ -23,5 +23,7 @@ namespace Advanced_To_DoList.Business.Abstract
         Task<IDataResult<GroupDto>> GetAsync(Expression<Func<Group, bool>> filter);
 
         Task<IDataResult<bool>> DeleteAsync(int id);
+
+  
     }
 }

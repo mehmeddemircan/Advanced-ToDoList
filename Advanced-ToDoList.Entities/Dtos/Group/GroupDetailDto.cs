@@ -15,5 +15,7 @@ namespace Advanced_ToDoList.Entities.Dtos.Group
         public string GroupName { get; set; }
 
         public int UserId { get; set; }
+
+        public int ThemeId { get; set; }
     }
 }

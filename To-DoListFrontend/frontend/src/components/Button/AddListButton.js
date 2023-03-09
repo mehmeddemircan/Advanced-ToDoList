@@ -1,31 +1,66 @@
 import { Button } from 'antd'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import NewListModal from '../Modal/NewListModal'
+import { useDispatch, useSelector } from 'react-redux'
+import { AddGroup } from '../../redux/Actions/GroupAction'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
-const AddListButton = () => {
+const AddListButton = ({auth}) => {
 
-    // modal ekleyelim liste için
-    const [showNewListModal, setShowNewListModal] = useState(false)
+  const [userId, setUserId] = useState(auth.user.id)
+  const [groupName, setGroupName] = useState("")
 
-    const handleShowNewListModal = () => {
-      setShowNewListModal(true)
-    }
+  const navigate = useNavigate()
+  const {success} = useSelector((state) => state.addNewGroup)
+  const addNewGroup = useSelector((state) => state.addNewGroup)
 
-    const handleCancelNewListModal = () => {
-      setShowNewListModal(false)
-    } 
+  // modal ekleyelim liste için
+  const [showNewListModal, setShowNewListModal] = useState(false)
+
+  const handleShowNewListModal = () => {
+    setShowNewListModal(true)
+  }
+
+  const handleCancelNewListModal = () => {
+    setShowNewListModal(false)
+  } 
+  useEffect(() => {
+    setUserId(auth.user.id)
+  }, [auth])
+  const dispatch = useDispatch()
+
+  const handleAddNewGroup =() => {
+      
+      dispatch(AddGroup({userId,groupName}))
+      if (!success) {
+        setShowNewListModal(false)
+        
+      }
+      if (addNewGroup.group.success) {
+        toast(addNewGroup.group.message)
+       
+      }
+  }
+
+
   return (
     <Fragment>
-    <Button style={{position:'fixed',marginTop: "12px"}} type="primary" shape="round"  size="medium"
+    <Button className='mb-3' style={{position:'fixed', bottom:0,}} type="primary" shape="round"  size="medium"
     onClick={handleShowNewListModal}
     >
         Add New List 
       </Button>
 
-      <NewListModal 
-        showNewListModal={showNewListModal}
-        handleCancelNewListModal={handleCancelNewListModal}
-      />
+     
+  <NewListModal
+  handleAddNewGroup={handleAddNewGroup}
+  groupName={groupName} 
+  setGroupName={setGroupName} 
+  showNewListModal={showNewListModal}
+  handleCancelNewListModal={handleCancelNewListModal}
+/>
+   
     </Fragment>
   )
 }

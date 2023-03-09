@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Advanced_To_DoList.Controllers.Areas.Admin
 {
-    [Route("api/[controller]")]
+    [Area("Admin")]
+    [Route("api/[Area]/[controller]")]
     [ApiController]
     public class UserOperationClaimsController : ControllerBase
     {

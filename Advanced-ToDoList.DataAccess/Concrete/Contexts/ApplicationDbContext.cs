@@ -31,5 +31,7 @@ namespace Advanced_ToDoList.DataAccess.Concrete.Contexts
 
         public DbSet<Step> Steps { get; set; }
 
+        public DbSet<Theme> Themes { get; set; }
+
     }
 }

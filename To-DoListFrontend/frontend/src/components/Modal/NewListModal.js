@@ -1,9 +1,9 @@
-import { Button, Modal } from "antd";
-import React, { Fragment, useState } from "react";
+import { Modal } from "antd";
+import React, { Fragment } from "react";
 
-const NewListModal = ({ handleCancelNewListModal, showNewListModal }) => {
+const NewListModal = ({ handleCancelNewListModal, showNewListModal ,groupName ,setGroupName , handleAddNewGroup }) => {
 
-    const [groupName, setGroupName] = useState("")
+   
 
   return (
     <Fragment>
@@ -16,7 +16,7 @@ const NewListModal = ({ handleCancelNewListModal, showNewListModal }) => {
         footer={[
             <button
             class="btn btn-primary"
-            onClick={handleCancelNewListModal}
+            onClick={handleAddNewGroup}
          
             disabled={groupName === "" ? true : false}
           >

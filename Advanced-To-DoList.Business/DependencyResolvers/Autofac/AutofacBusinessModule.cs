@@ -43,7 +43,10 @@ namespace Advanced_ToDoList.Business.DependencyResolvers.Autofac
             builder.RegisterType<PersonRepository>().As<IPersonRepository>();
 
             builder.RegisterType<StepManager>().As<IStepService>();
-            builder.RegisterType<StepRepository>().As<IStepRepository>();
+            builder.RegisterType<StepRepository>().As<IStepRepository>(); 
+            
+            builder.RegisterType<ThemeManager>().As<IThemeService>();
+            builder.RegisterType<ThemeRepository>().As<IThemeRepository>();
 
             builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>();
             builder.RegisterType<UserOperationClaimRepository>().As<IUserOperationClaimRepository>();

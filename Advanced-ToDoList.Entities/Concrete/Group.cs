@@ -15,5 +15,9 @@ namespace Advanced_ToDoList.Entities.Concrete
         public string GroupName { get; set; }
 
         public virtual IEnumerable<Mission>? Missions { get; set; }
+
+        public int? ThemeId { get; set; }
+
+        public virtual Theme Theme { get; set; }
     }
 }

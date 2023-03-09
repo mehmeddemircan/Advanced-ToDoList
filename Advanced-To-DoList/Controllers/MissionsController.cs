@@ -25,7 +25,7 @@ namespace Advanced_To_DoList.Controllers
 
             if (result != null)
             {
-                return Ok(result); 
+                return Ok(result.Data); 
             }
             return BadRequest();
         }
@@ -57,7 +57,7 @@ namespace Advanced_To_DoList.Controllers
             return BadRequest(); 
         }
 
-        [HttpDelete("Missions/Delete")]
+        [HttpDelete("Missions/{missionId}/Delete")]
 
         public async Task<IActionResult> DeleteMission(int missionId)
         {
@@ -83,6 +83,31 @@ namespace Advanced_To_DoList.Controllers
                 return Ok(result);
             }
             return BadRequest(); 
+        }
+
+        [HttpGet("Groups/{groupId}/Completed")]
+
+        public async Task<IActionResult> GetCompletedMissions(int groupId)
+        {
+            var result = await _missionService.GetListAsync(x =>x.GroupId == groupId && x.IsCompleted == true);
+            if (result != null)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet("Groups/{groupId}/UnCompleted")]
+
+        public async Task<IActionResult> GetUnCompletedMissions(int groupId)
+        {
+            var result = await _missionService.GetListAsync(x => x.GroupId == groupId && x.IsCompleted == false);
+            if (result != null)
+            {
+                return Ok(result.Data); 
+            }
+            return BadRequest();
         }
 
     }

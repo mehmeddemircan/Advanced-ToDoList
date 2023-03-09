@@ -37,7 +37,7 @@ namespace Advanced_To_DoList.Controllers
 
             if (result != null)
             {
-                return Ok(result);
+                return Ok(result.Data);
             }
             return BadRequest();
         }

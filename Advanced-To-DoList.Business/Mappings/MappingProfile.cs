@@ -4,6 +4,7 @@ using Advanced_ToDoList.Entities.Dtos.Group;
 using Advanced_ToDoList.Entities.Dtos.Mission;
 using Advanced_ToDoList.Entities.Dtos.Person;
 using Advanced_ToDoList.Entities.Dtos.Step;
+using Advanced_ToDoList.Entities.Dtos.Theme;
 using Advanced_ToDoList.Entities.Dtos.User;
 using AutoMapper;
 using System;
@@ -76,6 +77,20 @@ namespace Advanced_To_DoList.Business.Mappings
 
             CreateMap<Step, StepDetailDto>();
             CreateMap<StepDetailDto, Step>();
+
+
+
+            CreateMap<Theme, ThemeAddDto>();
+            CreateMap<ThemeAddDto, Theme>();
+
+            CreateMap<Theme, ThemeDto>();
+            CreateMap<ThemeDto, Theme>();
+
+            CreateMap<Theme, ThemeUpdateDto>();
+            CreateMap<ThemeUpdateDto, Theme>();
+
+            CreateMap<Theme, ThemeDetailDto>();
+            CreateMap<ThemeDetailDto, Theme>();
         }
     }
 }

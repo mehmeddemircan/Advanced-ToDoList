@@ -19,12 +19,14 @@ namespace Advanced_To_DoList.Business.Concrete
 
         IGroupRepository _groupRepository;
         IMissionRepository _missionRepository;
+        IThemeRepository _themeRepository; 
         IMapper _mapper; 
-        public GroupManager(IGroupRepository groupRepository, IMapper mapper, IMissionRepository missionRepository)
+        public GroupManager(IGroupRepository groupRepository, IMapper mapper, IMissionRepository missionRepository, IThemeRepository themeRepository)
         {
             _groupRepository = groupRepository;
             _mapper = mapper;
             _missionRepository = missionRepository;
+            _themeRepository = themeRepository;
         }
 
         public async Task<IDataResult<GroupDto>> AddAsync(GroupAddDto entity)
@@ -57,6 +59,10 @@ namespace Advanced_To_DoList.Business.Concrete
                 var missions = await _missionRepository.GetListAsync(x => x.GroupId == group.Id);
 
                 group.Missions = missions;
+
+                var theme = await _themeRepository.GetAsync(x => x.Id == group.ThemeId);
+
+                group.Theme = theme;
 
                 var groupDto = _mapper.Map<GroupDto>(group);
                 return new SuccessDataResult<GroupDto>(groupDto, Messages.Listed);
@@ -91,6 +97,7 @@ namespace Advanced_To_DoList.Business.Concrete
             group.UserId = getGroup.UserId;
             group.UpdatedDate = DateTime.Now;
             group.UpdatedUserId = 1;
+            group.ThemeId = entity.ThemeId;
 
 
             var resultUpdate = await _groupRepository.UpdateAsync(group);

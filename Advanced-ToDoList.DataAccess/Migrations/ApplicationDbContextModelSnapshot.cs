@@ -37,6 +37,9 @@ namespace Advanced_ToDoList.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ThemeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -152,6 +155,36 @@ namespace Advanced_ToDoList.DataAccess.Migrations
                     b.HasIndex("MissionId");
 
                     b.ToTable("Steps");
+                });
+
+            modelBuilder.Entity("Advanced_ToDoList.Entities.Concrete.Theme", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BackgroundImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ThemeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Themes");
                 });
 
             modelBuilder.Entity("Advanced_To_DoList.Core.Entities.Concrete.Auth.OperationClaim", b =>
